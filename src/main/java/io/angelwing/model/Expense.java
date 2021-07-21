@@ -1,5 +1,7 @@
 package io.angelwing.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -12,6 +14,7 @@ import java.util.UUID;
 public class Expense {
 
     @Id
+    @Type(type = "uuid-char")
     private UUID id ;
 
     @Column(name = "category_id")
