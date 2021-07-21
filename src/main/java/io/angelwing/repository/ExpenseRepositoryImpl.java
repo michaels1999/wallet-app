@@ -1,4 +1,4 @@
-package io.angelwing.db;
+package io.angelwing.repository;
 
 import io.angelwing.model.Expense;
 import org.hibernate.Session;
@@ -8,14 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public class ExpenseDbImpl implements ExpenseDb{
-    private static final Logger logger = LoggerFactory.getLogger(ExpenseDbImpl.class);
+public class ExpenseRepositoryImpl implements ExpenseRepository {
+    private static final Logger logger = LoggerFactory.getLogger(ExpenseRepositoryImpl.class);
 
     private SessionFactory sessionFactory;
 
-    public ExpenseDbImpl(SessionFactory sessionFactory) {
+    public ExpenseRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -34,20 +35,20 @@ public class ExpenseDbImpl implements ExpenseDb{
     }
 
     @Override
-    public void removeExpense(int id) {
+    public void removeExpense(UUID id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Expense expense = (Expense) session.load(Expense.class , new Integer(id));
+        Expense expense = (Expense) session.load(Expense.class, id);
 
-        if(expense!=null){
+        if (expense != null) {
             session.delete(expense);
         }
         logger.info("Expense successfully removed . Expense details: " + expense);
     }
 
     @Override
-    public Expense getExpenseById(int id) {
-        Session session =this.sessionFactory.getCurrentSession();
-        Expense expense = (Expense) session.load(Expense.class , new Integer(id));
+    public Expense getExpenseById(UUID id) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Expense expense = (Expense) session.load(Expense.class, id);
         logger.info("Expense successfully loaded . Expense details: " + expense);
         return expense;
     }
@@ -58,7 +59,7 @@ public class ExpenseDbImpl implements ExpenseDb{
         Session session = this.sessionFactory.getCurrentSession();
         List<Expense> expenseList = session.createQuery("from Expense").list();
 
-        for (Expense expense : expenseList){
+        for (Expense expense : expenseList) {
             logger.info("Expense list: " + expense);
         }
         return expenseList;
