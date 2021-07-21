@@ -1,47 +1,49 @@
 package io.angelwing.service;
 
-import io.angelwing.dc.IncomeDc;
+import io.angelwing.repository.IncomeRepository;
 import io.angelwing.model.Income;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class IncomeServiceImpl implements IncomeService{
-    private IncomeDc incomeDc;
+public class IncomeServiceImpl implements IncomeService {
 
-    public IncomeServiceImpl(IncomeDc incomeDc) {
-        this.incomeDc = incomeDc;
+    private IncomeRepository incomeRepository;
+
+    public IncomeServiceImpl(IncomeRepository incomeRepository) {
+        this.incomeRepository = incomeRepository;
     }
 
     @Override
     @Transactional
     public void addIncome(Income income) {
-        this.incomeDc.addIncome(income);
+        this.incomeRepository.addIncome(income);
     }
 
     @Override
     @Transactional
     public void updateIncome(Income income) {
-        this.incomeDc.updateIncome(income);
+        this.incomeRepository.updateIncome(income);
     }
 
     @Override
     @Transactional
-    public void removeIncome(int id) {
-        this.incomeDc.removeIncome(id);
+    public void removeIncome(UUID id) {
+        this.incomeRepository.removeIncome(id);
     }
 
     @Override
     @Transactional
-    public Income getIncomeById(int id) {
-        return incomeDc.getIncomeById(id);
+    public Income getIncomeById(UUID id) {
+        return incomeRepository.getIncomeById(id);
     }
 
     @Override
     @Transactional
     public List<Income> listIncome() {
-        return incomeDc.listExpense();
+        return incomeRepository.listExpense();
     }
 }

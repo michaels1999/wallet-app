@@ -1,50 +1,52 @@
 package io.angelwing.service;
 
-import io.angelwing.db.ExpenseDb;
+import io.angelwing.repository.ExpenseRepository;
 import io.angelwing.model.Expense;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class ExpenseServiceImpl implements ExpenseService{
-    private ExpenseDb expenseDb;
+public class ExpenseServiceImpl implements ExpenseService {
 
-    public ExpenseServiceImpl(ExpenseDb expenseDb) {
-        this.expenseDb = expenseDb;
+    private ExpenseRepository expenseRepository;
+
+    public ExpenseServiceImpl(ExpenseRepository expenseRepository) {
+        this.expenseRepository = expenseRepository;
     }
 
     @Override
     @Transactional
     public void addExpense(Expense expense) {
-        this.expenseDb.addExpense(expense);
+        this.expenseRepository.addExpense(expense);
 
     }
 
     @Override
     @Transactional
     public void updateExpense(Expense expense) {
-        this.expenseDb.updateExpense(expense);
+        this.expenseRepository.updateExpense(expense);
     }
 
     @Override
     @Transactional
-    public void removeExpense(int id) {
-        this.expenseDb.removeExpense(id);
+    public void removeExpense(UUID id) {
+        this.expenseRepository.removeExpense(id);
 
     }
 
     @Override
     @Transactional
-    public Expense getExpenseById(int id) {
-        return this.expenseDb.getExpenseById(id);
+    public Expense getExpenseById(UUID id) {
+        return this.expenseRepository.getExpenseById(id);
     }
 
     @Override
     @Transactional
     public List<Expense> listExpense() {
-        return this.expenseDb.listExpense();
+        return this.expenseRepository.listExpense();
     }
 }

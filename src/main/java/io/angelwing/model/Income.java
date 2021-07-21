@@ -1,16 +1,30 @@
 package io.angelwing.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Entity
+@Table(name = "income")
 public class Income {
+
+    @Id
     private UUID id ;
+
+    @Column(name = "category_id")
     private UUID category;
+
     private Double amount;
+
     private String currency;
+
     private LocalDateTime date;
 
     public Income() {
+        // NOOP
     }
 
     public Income(UUID id, UUID category, Double amount, String currency, LocalDateTime date) {

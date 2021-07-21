@@ -1,6 +1,5 @@
-package io.angelwing.dc;
+package io.angelwing.repository;
 
-import io.angelwing.model.Expense;
 import io.angelwing.model.Income;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,14 +8,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
-public class IncomeDcImpl implements IncomeDc{
-    private static final Logger logger = LoggerFactory.getLogger(IncomeDcImpl.class);
+public class IncomeRepositoryImpl implements IncomeRepository {
+
+    private static final Logger logger = LoggerFactory.getLogger(IncomeRepositoryImpl.class);
 
     private SessionFactory sessionFactory;
 
-    public IncomeDcImpl(SessionFactory sessionFactory) {
+    public IncomeRepositoryImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
@@ -38,9 +39,9 @@ public class IncomeDcImpl implements IncomeDc{
     }
 
     @Override
-    public void removeIncome(int id) {
+    public void removeIncome(UUID id) {
         Session session = this.sessionFactory.getCurrentSession();
-        Income income = (Income) session.load(Income.class , new Integer(id));
+        Income income = session.load(Income.class , id);
 
         if(income!=null){
             session.delete(income);
@@ -49,9 +50,9 @@ public class IncomeDcImpl implements IncomeDc{
     }
 
     @Override
-    public Income getIncomeById(int id) {
+    public Income getIncomeById(UUID id) {
         Session session =this.sessionFactory.getCurrentSession();
-        Income income = (Income) session.load(Income.class , new Integer(id));
+        Income income = session.load(Income.class , id);
         logger.info("Income successfully loaded . Income details: " + income);
         return income;
 
