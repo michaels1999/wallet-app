@@ -1,12 +1,12 @@
 package io.angelwing;
 
-import io.angelwing.model.Expense;
+import io.angelwing.service.ExpenseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @SpringBootApplication
@@ -17,10 +17,12 @@ public class WalletApplication {
     }
 
     @Bean
-    public CommandLineRunner run() {
+    public CommandLineRunner run(@Autowired final ExpenseService expenseService) {
         return args -> {
-            System.out.println("Hello World");
-            // TODO: crud operations with mysql
+           expenseService.removeExpense(UUID.fromString("b15c66af-c60e-4854-a4ea-e4db5859a8bd"));
+
+
+
         };
     }
 
