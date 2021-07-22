@@ -41,13 +41,11 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    @Transactional
     public Optional<Income> getIncomeById(UUID id) {
         return incomeRepository.findById(id);
     }
 
     @Override
-    @Transactional
     public List<Income> listIncome() {
         return StreamSupport.stream(incomeRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());

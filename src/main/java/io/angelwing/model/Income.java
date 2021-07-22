@@ -18,7 +18,7 @@ public class Income {
     private UUID id ;
 
     @Column(name = "category_id")
-    private UUID category;
+    private IncomeCategory category;
 
     private Double amount;
 
@@ -30,7 +30,7 @@ public class Income {
         // NOOP
     }
 
-    public Income(UUID id, UUID category, Double amount, String currency, LocalDateTime date) {
+    public Income(UUID id, IncomeCategory category, Double amount, String currency, LocalDateTime date) {
         this.id = id;
         this.category = category;
         this.amount = amount;
@@ -42,7 +42,7 @@ public class Income {
         this.id = id;
     }
 
-    public void setCategory(UUID category) {
+    public void setCategory(IncomeCategory category) {
         this.category = category;
     }
 
@@ -62,7 +62,7 @@ public class Income {
         return id;
     }
 
-    public UUID getCategory() {
+    public IncomeCategory getCategory() {
         return category;
     }
 
