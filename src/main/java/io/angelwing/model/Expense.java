@@ -2,11 +2,10 @@ package io.angelwing.model;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+
 import java.util.UUID;
 
 @Entity
@@ -18,7 +17,14 @@ public class Expense {
     private UUID id ;
 
     @Column(name = "category_id")
+   // @Enumerated(EnumType.STRING)
     private ExpenseCategory category;
+
+
+    private HashMap<String,Integer> category_id;
+
+ // @ManyToOne
+  // private Expense ExpenseCategory;
 
     private String name;
 
@@ -27,8 +33,6 @@ public class Expense {
     private String currency;
 
     private LocalDateTime date;
-
-
 
 
     public Expense() {
@@ -92,11 +96,21 @@ public class Expense {
         return date;
     }
 
+
+    public HashMap<String, Integer> getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(HashMap<String, Integer> category_id) {
+        this.category_id = category_id;
+    }
+
     @Override
     public String toString() {
         return "Expense{" +
                 "id=" + id +
                 ", category=" + category +
+                ", category_id=" + category_id +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
                 ", currency='" + currency + '\'' +
