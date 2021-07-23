@@ -14,9 +14,9 @@ public class Income {
     @Type(type = "uuid-char")
     private UUID id ;
 
-    @Column(name = "category_id")
-    @Enumerated(EnumType.STRING)
-    private IncomeCategory category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "category_id")
+    private Income incomeCategory;
 
     private Double amount;
 
@@ -25,34 +25,14 @@ public class Income {
     private LocalDateTime date;
 
     public Income() {
-        // NOOP
+    super();
     }
 
-    public Income(UUID id, IncomeCategory category, Double amount, String currency, LocalDateTime date) {
+    public Income(UUID id, Income incomeCategory, Double amount, String currency, LocalDateTime date) {
         this.id = id;
-        this.category = category;
+        this.incomeCategory = incomeCategory;
         this.amount = amount;
         this.currency = currency;
-        this.date = date;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setCategory(IncomeCategory category) {
-        this.category = category;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -60,27 +40,47 @@ public class Income {
         return id;
     }
 
-    public IncomeCategory getCategory() {
-        return category;
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Income getIncomeCategory() {
+        return incomeCategory;
+    }
+
+    public void setIncomeCategory(Income incomeCategory) {
+        this.incomeCategory = incomeCategory;
     }
 
     public Double getAmount() {
         return amount;
     }
 
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
     public String getCurrency() {
         return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public LocalDateTime getDate() {
         return date;
     }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Income{" +
                 "id=" + id +
-                ", category=" + category +
+                ", incomeCategory=" + incomeCategory +
                 ", amount=" + amount +
                 ", currency='" + currency + '\'' +
                 ", date=" + date +
