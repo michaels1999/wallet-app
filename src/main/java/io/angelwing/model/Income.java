@@ -3,6 +3,8 @@ package io.angelwing.model;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -25,7 +27,8 @@ public class Income {
 
     private Double amount;
 
-    private String currency;
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     private LocalDateTime date;
 
@@ -33,7 +36,7 @@ public class Income {
         // NOOP
     }
 
-    public Income(UUID id, IncomeCategory incomeCategory, Double amount, String currency, LocalDateTime date) {
+    public Income(UUID id, IncomeCategory incomeCategory, Double amount, Currency currency, LocalDateTime date) {
         this.id = id;
         this.incomeCategory = incomeCategory;
         this.amount = amount;
@@ -65,11 +68,11 @@ public class Income {
         this.amount = amount;
     }
 
-    public String getCurrency() {
+    public Currency getCurrency() {
         return currency;
     }
 
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
