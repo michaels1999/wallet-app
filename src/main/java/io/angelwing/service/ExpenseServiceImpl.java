@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class ExpenseServiceImpl implements ExpenseService {
 
-    private ExpenseRepository expenseRepository;
+    private final ExpenseRepository expenseRepository;
 
     @Autowired
     public ExpenseServiceImpl(ExpenseRepository expenseRepository) {
@@ -43,13 +43,11 @@ public class ExpenseServiceImpl implements ExpenseService {
     }
 
     @Override
-    @Transactional
     public Optional<Expense> getExpenseById(UUID id) {
         return expenseRepository.findById(id);
     }
 
     @Override
-    @Transactional
     public List<Expense> listExpense() {
         return StreamSupport.stream(expenseRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());

@@ -2,9 +2,11 @@ package io.angelwing.model;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,10 +17,11 @@ public class Income {
 
     @Id
     @Type(type = "uuid-char")
-    private UUID id ;
+    private UUID id;
 
-    @Column(name = "category_id")
-    private UUID category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private IncomeCategory incomeCategory;
 
     private Double amount;
 
@@ -30,31 +33,11 @@ public class Income {
         // NOOP
     }
 
-    public Income(UUID id, UUID category, Double amount, String currency, LocalDateTime date) {
+    public Income(UUID id, IncomeCategory incomeCategory, Double amount, String currency, LocalDateTime date) {
         this.id = id;
-        this.category = category;
+        this.incomeCategory = incomeCategory;
         this.amount = amount;
         this.currency = currency;
-        this.date = date;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setCategory(UUID category) {
-        this.category = category;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -62,27 +45,47 @@ public class Income {
         return id;
     }
 
-    public UUID getCategory() {
-        return category;
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public IncomeCategory getIncomeCategory() {
+        return incomeCategory;
+    }
+
+    public void setIncomeCategory(IncomeCategory incomeCategory) {
+        this.incomeCategory = incomeCategory;
     }
 
     public Double getAmount() {
         return amount;
     }
 
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
     public String getCurrency() {
         return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public LocalDateTime getDate() {
         return date;
     }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "Income{" +
                 "id=" + id +
-                ", category=" + category +
+                ", IncomeCategory=" + incomeCategory +
                 ", amount=" + amount +
                 ", currency='" + currency + '\'' +
                 ", date=" + date +
