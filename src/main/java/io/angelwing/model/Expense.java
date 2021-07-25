@@ -2,9 +2,11 @@ package io.angelwing.model;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,10 +17,11 @@ public class Expense {
 
     @Id
     @Type(type = "uuid-char")
-    private UUID id ;
+    private UUID id;
 
-    @Column(name = "category_id")
-    private UUID category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private ExpenseCategory expenseCategory;
 
     private String name;
 
@@ -33,36 +36,12 @@ public class Expense {
         // NOOP
     }
 
-    public Expense(UUID id, UUID category, String name, Double amount, String currency, LocalDateTime date) {
+    public Expense(UUID id, ExpenseCategory expenseCategory, String name, Double amount, String currency, LocalDateTime date) {
         this.id = id;
-        this.category = category;
+        this.expenseCategory = expenseCategory;
         this.name = name;
         this.amount = amount;
         this.currency = currency;
-        this.date = date;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public void setCategory(UUID category) {
-        this.category = category;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -70,31 +49,55 @@ public class Expense {
         return id;
     }
 
-    public UUID getCategory() {
-        return category;
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public ExpenseCategory getExpenseCategory() {
+        return expenseCategory;
+    }
+
+    public void setExpenseCategory(ExpenseCategory expenseCategory) {
+        this.expenseCategory = expenseCategory;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Double getAmount() {
         return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     public String getCurrency() {
         return currency;
     }
 
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     public LocalDateTime getDate() {
         return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override
     public String toString() {
         return "Expense{" +
                 "id=" + id +
-                ", category=" + category +
+                ", ExpenseCategory=" + expenseCategory +
                 ", name='" + name + '\'' +
                 ", amount=" + amount +
                 ", currency='" + currency + '\'' +

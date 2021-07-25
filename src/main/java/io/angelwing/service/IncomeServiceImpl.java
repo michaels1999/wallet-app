@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
 @Service
 public class IncomeServiceImpl implements IncomeService {
 
-    private IncomeRepository incomeRepository;
+    private final IncomeRepository incomeRepository;
 
     @Autowired
     public IncomeServiceImpl(IncomeRepository incomeRepository) {
@@ -41,13 +41,11 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    @Transactional
     public Optional<Income> getIncomeById(UUID id) {
         return incomeRepository.findById(id);
     }
 
     @Override
-    @Transactional
     public List<Income> listIncome() {
         return StreamSupport.stream(incomeRepository.findAll().spliterator(), false)
                 .collect(Collectors.toList());
