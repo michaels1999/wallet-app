@@ -25,6 +25,8 @@ public class Income {
     @JoinColumn(name = "category_id")
     private IncomeCategory incomeCategory;
 
+    private String name;
+
     private Double amount;
 
     @Enumerated(EnumType.STRING)
@@ -36,9 +38,10 @@ public class Income {
         // NOOP
     }
 
-    public Income(UUID id, IncomeCategory incomeCategory, Double amount, Currency currency, LocalDateTime date) {
+    public Income(UUID id, IncomeCategory incomeCategory, String name, Double amount, Currency currency, LocalDateTime date) {
         this.id = id;
         this.incomeCategory = incomeCategory;
+        this.name = name;
         this.amount = amount;
         this.currency = currency;
         this.date = date;
@@ -58,6 +61,14 @@ public class Income {
 
     public void setIncomeCategory(IncomeCategory incomeCategory) {
         this.incomeCategory = incomeCategory;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Double getAmount() {
@@ -88,9 +99,10 @@ public class Income {
     public String toString() {
         return "Income{" +
                 "id=" + id +
-                ", IncomeCategory=" + incomeCategory +
+                ", incomeCategory=" + incomeCategory +
+                ", name='" + name + '\'' +
                 ", amount=" + amount +
-                ", currency='" + currency + '\'' +
+                ", currency=" + currency +
                 ", date=" + date +
                 '}';
     }
